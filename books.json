@@ -1,0 +1,22 @@
+{
+    "CategoryID": 10001,
+    "CategoryName": "Mobile Development",
+    "Books": [
+      {
+        "ID": 475,
+        "BookTitle": "Flutter Mobile Development"
+      },
+      {
+        "ID": 482,
+        "BookTitle": "Flutter Cookbook"
+      },
+      {
+        "ID": 495,
+        "BookTitle": "Hybrid App Development"
+      },
+      {
+        "ID": 402,
+        "BookTitle": "Hybrid App Development"
+      }
+    ]
+}

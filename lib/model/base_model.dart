@@ -1,8 +1,5 @@
-abstract class BaseModel{
-  int id;
-
+abstract class BaseModel {
+  
   static fromMap() {}
-  toMap() {}
-
   fromJson(Map<String, dynamic> json);
 }

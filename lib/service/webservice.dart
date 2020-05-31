@@ -1,14 +1,14 @@
 import 'dart:convert';
+import 'package:flutter_http_request/model/base_model.dart';
+import 'package:flutter_http_request/model/books.dart';
 
 import 'package:http/http.dart' as http;
 
-import '../model/books.dart';
-import '../model/base_model.dart';
-
-class Webservice {
-  Future<BaseModel> getData<T>(String url, BaseModel baseModel) async {
+class WebService {
+  Future<BaseModel> getData(String url, BaseModel baseModel) async {
     final response = await http.get(url);
-    if(response.statusCode == 200) {   
+
+    if (response.statusCode == 200) {
       baseModel.fromJson(json.decode(response.body));
       return baseModel;
     } else {
@@ -17,10 +17,9 @@ class Webservice {
   }
 
   Future<BooksModel> fetchBooks() async {
-    
-    String url = 'http://www.iSharpeners.com/books.txt';
+    String URL = 'http://www.iSharpeners.com/books.txt';
 
-    final serviceResponse = await Webservice().getData<BooksModel>(url, new BooksModel());
+    final serviceResponse = await WebService().getData(URL, new BooksModel());
 
     return serviceResponse;
   }

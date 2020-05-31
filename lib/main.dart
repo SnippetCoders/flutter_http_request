@@ -1,18 +1,16 @@
 import 'package:flutter/material.dart';
-import 'model/books.dart';
-import 'service/webservice.dart';
+import 'package:flutter_http_request/model/books.dart';
+import 'package:flutter_http_request/service/webservice.dart';
 
 void main() {
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  Webservice webService = new Webservice();
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Image Loader',
+      title: 'Http Request',
       debugShowCheckedModeBanner: false,
       home: MyHomePage(),
     );
@@ -31,22 +29,21 @@ class MyHomePage extends StatelessWidget {
 
   Widget _fetchData() {
     return FutureBuilder<BooksModel>(
-      future: Webservice().fetchBooks(),
-      builder: (BuildContext context, AsyncSnapshot<BooksModel> bookModel) {
-        if (bookModel.hasData) {
-          return _listView(bookModel.data);
-        }
+        future: WebService().fetchBooks(),
+        builder: (BuildContext context, AsyncSnapshot<BooksModel> bookModel) {
+          if (bookModel.hasData) {
+            return _listView(bookModel.data);
+          }
 
-        return CircularProgressIndicator();
-      },
-    );
+          return CircularProgressIndicator();
+        });
   }
 
   Widget _listView(BooksModel model) {
     return ListView(
       children: <Widget>[
         _buildHeader(model.categoryName),
-        ListView.separated(
+        ListView.separated(            
             itemCount: model.books.length,
             physics: ScrollPhysics(),
             shrinkWrap: true,
@@ -55,9 +52,14 @@ class MyHomePage extends StatelessWidget {
             },
             separatorBuilder: (context, index) {
               return Divider();
-            })
+            }
+        )
       ],
     );
+  }
+
+  Widget _buildRow(Books bookModel) {
+    return ListTile(title: new Text(bookModel.bookTitle));
   }
 
   Widget _buildHeader(String text) {
@@ -65,11 +67,6 @@ class MyHomePage extends StatelessWidget {
         padding: EdgeInsets.all(10),
         child: Center(
             child: Text(text,
-                style:
-                    (TextStyle(fontWeight: FontWeight.bold, fontSize: 20)))));
-  }
-
-  Widget _buildRow(Books bookModel) {
-    return ListTile(title: new Text(bookModel.bookTitle));
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20))));
   }
 }
